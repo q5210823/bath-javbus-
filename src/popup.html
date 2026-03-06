@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magnet Batch Fetcher</title>
+  <link rel="stylesheet" href="./popup.css" />
+</head>
+<body>
+  <main class="app">
+    <h1>批量抓取磁力链接</h1>
+    <p class="hint">每行一个番号，例如：SSIS-001</p>
+
+    <section class="panel">
+      <h2>筛选设置</h2>
+      <div class="size-range">
+        <label class="setting-col" for="minSize">
+          <span>最小大小（GB）</span>
+          <input id="minSize" type="number" min="0" step="0.1" value="4" />
+        </label>
+        <label class="setting-col" for="maxSize">
+          <span>最大大小（GB）</span>
+          <input id="maxSize" type="number" min="0.1" step="0.1" value="20" />
+        </label>
+      </div>
+
+      <div class="setting-group">
+        <span class="setting-label">`selected_title` 优先展示（可多选）</span>
+        <label class="setting-check">
+          <input id="titleIncludeChinese" type="checkbox" checked />
+          <span>`中文字幕`</span>
+        </label>
+        <label class="setting-check">
+          <input id="titleIncludeFHDC" type="checkbox" checked />
+          <span>`[FHDC]`</span>
+        </label>
+        <label class="setting-check">
+          <input id="titleIncludeHD" type="checkbox" checked />
+          <span>`[HD]`</span>
+        </label>
+      </div>
+      <div class="setting-group">
+        <span class="setting-label">`selected_title` 屏蔽（可多选）</span>
+        <label class="setting-check">
+          <input id="titleExclude4k" type="checkbox" checked />
+          <span>`[4k]`</span>
+        </label>
+        <label class="setting-check">
+          <input id="titleExclude720p" type="checkbox" checked />
+          <span>`[720p]`</span>
+        </label>
+      </div>
+      <p id="activeRule" class="hint"></p>
+    </section>
+
+    <textarea id="codes" placeholder="ABP-123\nSSIS-001\nIPX-999"></textarea>
+
+    <div class="actions">
+      <button id="fetchBtn">开始抓取</button>
+      <button id="copyBtn" class="secondary" disabled>复制结果</button>
+      <button id="copyMagnetsBtn" class="secondary" disabled>复制磁力</button>
+    </div>
+
+    <p id="status" class="status"></p>
+
+    <table id="resultTable" class="result-table" hidden>
+      <thead>
+        <tr>
+          <th>番号</th>
+          <th>状态</th>
+          <th>selected_size</th>
+          <th>筛选后首条磁链</th>
+          <th>匹配数</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <details class="panel debug-panel" id="debugPanel">
+      <summary class="debug-summary">调试日志（候选过滤明细）</summary>
+      <table id="debugTable" class="result-table" hidden>
+        <thead>
+          <tr>
+            <th>番号</th>
+            <th>#</th>
+            <th>selected_size</th>
+            <th>priority</th>
+            <th>reason</th>
+            <th>标题</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p id="debugEmpty" class="hint">抓取后会显示候选过滤明细</p>
+    </details>
+
+    <section class="panel history-panel">
+      <div class="history-head">
+        <h2>抓取历史（按时间倒序）</h2>
+        <div class="history-actions">
+          <button id="exportHistoryBtn" class="secondary">导出历史</button>
+          <button id="clearHistoryBtn" class="secondary danger">清除历史</button>
+        </div>
+      </div>
+      <table id="historyTable" class="result-table" hidden>
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>番号</th>
+            <th>状态</th>
+            <th>大小</th>
+            <th>磁链（首条）</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p id="historyEmpty" class="hint">暂无历史记录</p>
+    </section>
+  </main>
+
+  <script src="./popup.js"></script>
+</body>
+</html>

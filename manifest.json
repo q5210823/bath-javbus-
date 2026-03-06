@@ -1,0 +1,16 @@
+﻿{
+  "manifest_version": 3,
+  "name": "Jav Magnet Batch Fetcher",
+  "version": "0.1.0",
+  "description": "根据番号批量抓取页面中的磁力链接。",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": [
+    "https://sukebei.nyaa.si/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "Jav Magnet Batch Fetcher"
+  }
+}
